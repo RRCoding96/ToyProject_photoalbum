@@ -3,6 +3,9 @@
 build
 .idea
 
+# 이미지 폴더 추가
+photos/*
+
 # Compiled class file
 *.class
 
