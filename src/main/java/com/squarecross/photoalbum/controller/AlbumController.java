@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/albums")
 public class AlbumController {
@@ -26,5 +28,10 @@ public class AlbumController {
         return new ResponseEntity<>(album, HttpStatus.OK);
     }
 
+    @PostMapping("/json_body")
+    public ResponseEntity<AlbumDto> getAlbumByJson(@RequestBody Map<String, Long> albumIdMap) {
+        AlbumDto album = albumService.getAlbum(albumIdMap.get("albumId"));
+        return new ResponseEntity<>(album, HttpStatus.OK);
+    }
 
 }
