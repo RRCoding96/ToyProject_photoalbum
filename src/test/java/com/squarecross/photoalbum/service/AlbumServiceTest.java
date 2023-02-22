@@ -1,5 +1,6 @@
 package com.squarecross.photoalbum.service;
 
+import com.squarecross.photoalbum.controller.AlbumController;
 import com.squarecross.photoalbum.domain.Album;
 import com.squarecross.photoalbum.domain.Photo;
 import com.squarecross.photoalbum.dto.AlbumDto;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 
+import java.io.IOException;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,6 +30,8 @@ class AlbumServiceTest {
     PhotoRepository photoRepository;
     @Autowired
     AlbumService albumService;
+    @Autowired
+    AlbumController albumController;
 
     @Test
     void getAlbum() {
@@ -75,5 +80,15 @@ class AlbumServiceTest {
         int expectedCount = 3;
         int actualCount = photoRepository.countByAlbum_AlbumId(savedAlbum.getAlbumId());
         assertThat(actualCount).isEqualTo(expectedCount);
+    }
+
+    @Test
+    void testAlbumCreate() throws IOException {
+        AlbumDto albumDto = new AlbumDto();
+        albumDto.setAlbumName("test 1");
+
+        AlbumDto createdAlbum = albumService.createAlbum(albumDto);
+
+        assertThat(albumDto.getAlbumName()).isEqualTo(createdAlbum.getAlbumName());
     }
 }
