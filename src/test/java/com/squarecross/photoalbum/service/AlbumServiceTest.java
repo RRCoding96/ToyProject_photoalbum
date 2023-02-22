@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -90,5 +93,15 @@ class AlbumServiceTest {
         AlbumDto createdAlbum = albumService.createAlbum(albumDto);
 
         assertThat(albumDto.getAlbumName()).isEqualTo(createdAlbum.getAlbumName());
+    }
+
+    @Test
+    void deleteMadeFolder() throws IOException {
+        Path testFolderPath = Paths.get("테스트 폴더");
+        Files.createDirectory(testFolderPath);
+
+        Files.delete(testFolderPath);
+
+        assertFalse(Files.exists(testFolderPath));
     }
 }
