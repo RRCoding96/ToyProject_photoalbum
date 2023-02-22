@@ -51,7 +51,7 @@ public class AlbumService {
     }
 
     private void createAlbumDirectories(Album album) throws IOException {
-        Files.createDirectories(Paths.get(Constants.PATH_PREFIX + "/photos/originals/" + album.getAlbumId()));
+        Files.createDirectories(Paths.get(Constants.PATH_PREFIX + "/photos/original/" + album.getAlbumId()));
         Files.createDirectories(Paths.get(Constants.PATH_PREFIX + "/photos/thumb/" + album.getAlbumId()));
     }
 }
