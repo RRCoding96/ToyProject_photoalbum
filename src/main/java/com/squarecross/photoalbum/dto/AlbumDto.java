@@ -1,12 +1,23 @@
 package com.squarecross.photoalbum.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class AlbumDto {
     Long albumId;
     String albumName;
     Date createdAt;
     int count;
+
+    public List<String> getThumbUrls() {
+        return thumbUrls;
+    }
+
+    public void setThumbUrls(List<String> thumbUrls) {
+        this.thumbUrls = thumbUrls;
+    }
+
+    private List<String> thumbUrls;
 
     public Long getAlbumId() {
         return albumId;
