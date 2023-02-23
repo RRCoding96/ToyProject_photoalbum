@@ -65,6 +65,10 @@ public class AlbumService {
             albums = albumRepository.findByAlbumNameContainingOrderByAlbumNameAsc(keyword);
         } else if (Objects.equals(sort, "byDate")) {
             albums = albumRepository.findByAlbumNameContainingOrderByCreatedAtDesc(keyword);
+        } else if (Objects.equals(sort, "byNameDesc")) {
+            albums = albumRepository.findByAlbumNameContainingOrderByAlbumNameDesc(keyword);
+        } else if (Objects.equals(sort, "byDateAsc")) {
+            albums = albumRepository.findByAlbumNameContainingOrderByCreatedAtAsc(keyword);
         } else {
             throw new IllegalArgumentException("알 수 없는 정렬 기준입니다");
         }

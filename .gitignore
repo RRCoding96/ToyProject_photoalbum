@@ -1,6 +1,6 @@
 #etc
-.gradle
-build
+.gradle/
+build/
 .idea
 
 # 이미지 폴더 추가
