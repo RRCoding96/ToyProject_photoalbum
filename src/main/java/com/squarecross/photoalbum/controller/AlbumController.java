@@ -58,4 +58,10 @@ public class AlbumController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{albumId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteAlbum(@PathVariable("albumId") final long albumId) {
+        albumService.deleteAlbum(albumId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
