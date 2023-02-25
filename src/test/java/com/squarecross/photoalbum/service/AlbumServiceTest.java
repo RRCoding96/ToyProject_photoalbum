@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -145,5 +146,21 @@ class AlbumServiceTest {
         AlbumDto updatedDto = albumService.getAlbum(albumId);
 
         assertEquals("변경후", updatedDto.getAlbumName());
+    }
+
+    @Test
+    void testDeleteAlbum() throws IOException {
+        String folder = "C://Temp//testAlbum";
+        File file = new File(folder);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        File.createTempFile("temp", ".txt", file);
+        File.createTempFile("temp", ".jpg", file);
+
+        Album album = new Album();
+        albumRepository.delete(album);
+
+        assertTrue(file.exists());
     }
 }
