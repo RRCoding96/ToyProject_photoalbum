@@ -1,5 +1,5 @@
 #etc
-.gradle/*
+.gradle/7.6/*
 build/*
 .idea
 
