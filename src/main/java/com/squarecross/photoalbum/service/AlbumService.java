@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -19,6 +20,8 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 
 @Service
 public class AlbumService {
@@ -92,5 +95,17 @@ public class AlbumService {
         updateAlbum.setAlbumName(albumDto.getAlbumName());
         Album savedAlbum = this.albumRepository.save(updateAlbum);
         return AlbumMapper.convertToDto(savedAlbum);
+    }
+
+    public void deleteAlbum(Long albumId) {
+        albumRepository.deleteById(albumId);
+        File file = new File(path);
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File jpg : files){
+                deleteAlbum(albumId);
+            }
+        }
+        file.delete();
     }
 }
