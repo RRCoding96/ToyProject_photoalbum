@@ -30,6 +30,13 @@ public class PhotoController {
                                                        @RequestParam("photos") MultipartFile[] files) throws IOException {
         List<PhotoDto> photoDtos = new ArrayList<>();
         for (MultipartFile file : files) {
+            if (!file.getContentType().equals("image/jpeg")
+                    && !file.getContentType().equals("image/png")
+                    && !file.getContentType().equals("image/gif")
+                    && !file.getContentType().equals("image/jpg")) {
+                throw new RuntimeException("이미지가 아닌 파일이 입력되었습니다.");
+            }
+
             PhotoDto photoDto = photoService.savePhoto(file, albumId);
             photoDtos.add(photoDto);
         }
