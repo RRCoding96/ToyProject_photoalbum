@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -104,5 +106,31 @@ public class PhotoService {
             throw new EntityNotFoundException(String.format("사진을 ID %d으로 찾을 수 없습니다.", photoId));
         }
         return new File(Constants.PATH_PREFIX + res.get().getOriginalUrl());
+    }
+
+    public List<PhotoDto> getPhotoList(String keyword, String sort, String orderBy) {
+        List<Photo> photos;
+        if (sort.equals("byDate")) {
+            if (orderBy.equals("asc")) {
+                photos = photoRepository.findByFileNameContainingOrderByUploadedAtAsc(keyword);
+            } else {
+                photos = photoRepository.findByFileNameContainingOrderByUploadedAtDesc(keyword);
+            }
+        } else if (sort.equals("byName")) {
+            if (orderBy.equals("asc")) {
+                photos = photoRepository.findByFileNameContainingOrderByFileNameAsc(keyword);
+            } else {
+                photos = photoRepository.findByFileNameContainingOrderByFileNameDesc(keyword);
+            }
+        } else {
+            throw new EntityNotFoundException("알 수 없는 정렬 기준입니다.");
+        }
+
+        List<PhotoDto> photoDtos = new ArrayList<>();
+        for (Photo photo : photos) {
+            photoDtos.add(PhotoMapper.convertToDto(photo));
+        }
+
+        return photoDtos;
     }
 }
