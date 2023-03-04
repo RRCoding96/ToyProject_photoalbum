@@ -156,4 +156,11 @@ public class PhotoController {
         List<PhotoDto> photoDtos = photoService.movePhotos(movePhotosRequest.getFromAlbumId(), movePhotosRequest.getToAlbumId(), movePhotosRequest.getPhotoIds());
         return new ResponseEntity<>(photoDtos, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "", method = RequestMethod.DELETE)
+    public ResponseEntity<List<PhotoDto>> deletePhotos(@RequestBody PhotoDto photoDto) throws IOException {
+        List<Long> photoIds = photoDto.getPhotoIds();
+        List<PhotoDto> photoDtos = photoService.deletePhotos(photoIds);
+        return new ResponseEntity<>(photoDtos, HttpStatus.OK);
+    }
 }

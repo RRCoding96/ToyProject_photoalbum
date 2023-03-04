@@ -171,4 +171,21 @@ public class PhotoService {
         }
         return PhotoMapper.convertToDtoList(photos);
     }
+
+    public List<PhotoDto> deletePhotos(List<Long> photoIds) throws IOException {
+        List<Photo> photos = new ArrayList<>();
+        for (Long photoId : photoIds) {
+            Optional<Photo> res = photoRepository.findById(photoId);
+            if (res.isPresent()) {
+                Photo photo = res.get();
+                photos.add(photo);
+                Files.delete(Path.of(Constants.PATH_PREFIX + photo.getOriginalUrl()));
+                Files.delete(Path.of(Constants.PATH_PREFIX + photo.getThumbUrl()));
+                photoRepository.deleteById(photoId);
+            } else {
+                throw new EntityNotFoundException("사진을 삭제 에러");
+            }
+        }
+        return PhotoMapper.convertToDtoList(photos);
+    }
 }
